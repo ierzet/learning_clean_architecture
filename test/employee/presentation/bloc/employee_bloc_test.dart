@@ -49,19 +49,28 @@ void main() {
       EmployeeLoading(),
       const EmployeeLoaded(testEmployeeEntity),
     ],
+    verify: (bloc) {
+      verify(
+        mockGetCurrentEmployeeUseCase.execute(testId),
+      );
+    },
   );
   blocTest<EmployeeBloc, EmployeeState>(
-    'should emit [EmployeeLoading, EmployeeLoaded] when data is  unsuccessfully',
-    build: () {
-      when(mockGetCurrentEmployeeUseCase.execute(testId))
-          .thenAnswer((_) async => const Left(ServerFailure('server failure')));
-      return employeeBloc;
-    },
-    act: (bloc) => bloc.add(const OnIdChanged(testId)),
-    wait: const Duration(milliseconds: 500),
-    expect: () => [
-      EmployeeLoading(),
-      const EmployeeLoadFailure('server failure'),
-    ],
-  );
+      'should emit [EmployeeLoading, EmployeeLoaded] when data is  unsuccessfully',
+      build: () {
+        when(mockGetCurrentEmployeeUseCase.execute(testId)).thenAnswer(
+            (_) async => const Left(ServerFailure('server failure')));
+        return employeeBloc;
+      },
+      act: (bloc) => bloc.add(const OnIdChanged(testId)),
+      wait: const Duration(milliseconds: 500),
+      expect: () => [
+            EmployeeLoading(),
+            const EmployeeLoadFailure('server failure'),
+          ],
+      verify: (bloc) {
+        verify(
+          mockGetCurrentEmployeeUseCase.execute(testId),
+        );
+      });
 }

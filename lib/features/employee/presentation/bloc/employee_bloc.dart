@@ -14,9 +14,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
         final result = await _getCurrentEmployeeUseCase.execute(event.id);
         result.fold(
           (failure) => emit(EmployeeLoadFailure(failure.message)),
-          (data) => emit(
-            EmployeeLoaded(data),
-          ),
+          (data) => emit(EmployeeLoaded(data)),
         );
       },
       transformer: debounce(const Duration(milliseconds: 500)),
