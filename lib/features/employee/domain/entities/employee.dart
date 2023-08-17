@@ -14,7 +14,11 @@ class EmployeeEntity extends Equatable {
     required this.lastName,
     required this.avatar,
   });
-
+  /*@override
+  String toString() {
+    return 'EmployeeEntity(id: $id, email: $email, firstName: $firstName, lastName: $lastName, avatar: $avatar)';
+  }
+*/
   @override
   List<Object?> get props => [id, email, firstName, lastName, avatar];
 }

@@ -15,3 +15,18 @@ class OnIdChanged extends EmployeeEvent {
   @override
   List<Object> get props => [id];
 }
+
+//////////////
+abstract class AllEmployeeEvent extends Equatable {
+  const AllEmployeeEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+class GetAllEmployee extends AllEmployeeEvent {
+  const GetAllEmployee();
+
+  @override
+  List<Object> get props => [];
+}

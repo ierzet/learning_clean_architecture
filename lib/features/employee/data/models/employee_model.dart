@@ -21,6 +21,38 @@ class EmployeeModel extends EmployeeEntity {
         lastName: json['data']['last_name'],
         avatar: json['data']['avatar'],
       );
+
+  static List<EmployeeModel> fromJsonList(dynamic jsonList) {
+    final List<EmployeeModel> employeeList = [];
+
+    if (jsonList is Map<String, dynamic> && jsonList.containsKey('data')) {
+      final dataJsonList = jsonList['data'] as List<dynamic>;
+      for (var json in dataJsonList) {
+        employeeList.add(EmployeeModel(
+          id: json['id'],
+          email: json['email'],
+          firstName: json['first_name'],
+          lastName: json['last_name'],
+          avatar: json['avatar'],
+        ));
+      }
+    }
+
+    return employeeList;
+  }
+
+  // static List<EmployeeModel> fromJsonList(List<dynamic> jsonList) {
+  //   return jsonList
+  //       .map((json) => EmployeeModel(
+  //             id: json['id'],
+  //             email: json['email'],
+  //             firstName: json['first_name'],
+  //             lastName: json['last_name'],
+  //             avatar: json['avatar'],
+  //           ))
+  //       .toList();
+  // }
+
   Map<String, dynamic> toJson() {
     return {
       'data': {
@@ -44,4 +76,18 @@ class EmployeeModel extends EmployeeEntity {
       firstName: firstName,
       lastName: lastName,
       avatar: avatar);
+
+  static List<EmployeeEntity> toEntityList(List<EmployeeModel> models) {
+    final List<EmployeeEntity> entities = [];
+
+    for (var model in models) {
+      final entity = model.toEntity();
+      entities.add(entity);
+    }
+
+    return entities;
+  }
+  // static List<EmployeeEntity> toEntityList(List<EmployeeModel> models) {
+  //   return models.map((model) => model.toEntity()).toList();
+  // }
 }

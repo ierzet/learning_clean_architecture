@@ -4,14 +4,16 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i6;
-import 'dart:convert' as _i11;
-import 'dart:typed_data' as _i12;
+import 'dart:convert' as _i13;
+import 'dart:typed_data' as _i14;
 
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:http/http.dart' as _i5;
 import 'package:learning_clean_architecture/core/error/failure.dart' as _i7;
 import 'package:learning_clean_architecture/features/employee/data/datasources/remote_data_source.dart'
     as _i9;
+import 'package:learning_clean_architecture/features/employee/data/datasources/remote_data_source_all_employee.dart'
+    as _i10;
 import 'package:learning_clean_architecture/features/employee/data/models/employee_model.dart'
     as _i3;
 import 'package:learning_clean_architecture/features/employee/domain/entities/employee.dart'
@@ -19,7 +21,9 @@ import 'package:learning_clean_architecture/features/employee/domain/entities/em
 import 'package:learning_clean_architecture/features/employee/domain/repositories/employee_repository.dart'
     as _i4;
 import 'package:learning_clean_architecture/features/employee/domain/usecases/get_current_employee.dart'
-    as _i10;
+    as _i11;
+import 'package:learning_clean_architecture/features/employee/domain/usecases/get_current_list_employee.dart'
+    as _i12;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -112,6 +116,23 @@ class MockEmployeeRepository extends _i1.Mock
           ),
         )),
       ) as _i6.Future<_i2.Either<_i7.Failure, _i8.EmployeeEntity>>);
+  @override
+  _i6.Future<_i2.Either<_i7.Failure, List<_i8.EmployeeEntity>>>
+      getCureentAllEmployees() => (super.noSuchMethod(
+            Invocation.method(
+              #getCureentAllEmployees,
+              [],
+            ),
+            returnValue: _i6.Future<
+                    _i2.Either<_i7.Failure, List<_i8.EmployeeEntity>>>.value(
+                _FakeEither_0<_i7.Failure, List<_i8.EmployeeEntity>>(
+              this,
+              Invocation.method(
+                #getCureentAllEmployees,
+                [],
+              ),
+            )),
+          ) as _i6.Future<_i2.Either<_i7.Failure, List<_i8.EmployeeEntity>>>);
 }
 
 /// A class which mocks [EmployeeRemoteDataSource].
@@ -140,11 +161,32 @@ class MockEmployeeRemoteDataSource extends _i1.Mock
       ) as _i6.Future<_i3.EmployeeModel>);
 }
 
+/// A class which mocks [AllEmployeeRemoteDataSource].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAllEmployeeRemoteDataSource extends _i1.Mock
+    implements _i10.AllEmployeeRemoteDataSource {
+  MockAllEmployeeRemoteDataSource() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i6.Future<List<_i3.EmployeeModel>> getCurrentAllEmployee() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getCurrentAllEmployee,
+          [],
+        ),
+        returnValue:
+            _i6.Future<List<_i3.EmployeeModel>>.value(<_i3.EmployeeModel>[]),
+      ) as _i6.Future<List<_i3.EmployeeModel>>);
+}
+
 /// A class which mocks [GetCurrentEmployeeUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGetCurrentEmployeeUseCase extends _i1.Mock
-    implements _i10.GetCurrentEmployeeUseCase {
+    implements _i11.GetCurrentEmployeeUseCase {
   MockGetCurrentEmployeeUseCase() {
     _i1.throwOnMissingStub(this);
   }
@@ -174,6 +216,42 @@ class MockGetCurrentEmployeeUseCase extends _i1.Mock
           ),
         )),
       ) as _i6.Future<_i2.Either<_i7.Failure, _i8.EmployeeEntity>>);
+}
+
+/// A class which mocks [GetCurrentAllEmployeeUsecase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGetCurrentAllEmployeeUsecase extends _i1.Mock
+    implements _i12.GetCurrentAllEmployeeUsecase {
+  MockGetCurrentAllEmployeeUsecase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.EmployeeRepository get employeeRepository => (super.noSuchMethod(
+        Invocation.getter(#employeeRepository),
+        returnValue: _FakeEmployeeRepository_2(
+          this,
+          Invocation.getter(#employeeRepository),
+        ),
+      ) as _i4.EmployeeRepository);
+  @override
+  _i6.Future<_i2.Either<_i7.Failure, List<_i8.EmployeeEntity>>> execute() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #execute,
+          [],
+        ),
+        returnValue:
+            _i6.Future<_i2.Either<_i7.Failure, List<_i8.EmployeeEntity>>>.value(
+                _FakeEither_0<_i7.Failure, List<_i8.EmployeeEntity>>(
+          this,
+          Invocation.method(
+            #execute,
+            [],
+          ),
+        )),
+      ) as _i6.Future<_i2.Either<_i7.Failure, List<_i8.EmployeeEntity>>>);
 }
 
 /// A class which mocks [Client].
@@ -229,7 +307,7 @@ class MockHttpClient extends _i1.Mock implements _i5.Client {
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i11.Encoding? encoding,
+    _i13.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -259,7 +337,7 @@ class MockHttpClient extends _i1.Mock implements _i5.Client {
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i11.Encoding? encoding,
+    _i13.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -289,7 +367,7 @@ class MockHttpClient extends _i1.Mock implements _i5.Client {
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i11.Encoding? encoding,
+    _i13.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -319,7 +397,7 @@ class MockHttpClient extends _i1.Mock implements _i5.Client {
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i11.Encoding? encoding,
+    _i13.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -358,7 +436,7 @@ class MockHttpClient extends _i1.Mock implements _i5.Client {
         returnValue: _i6.Future<String>.value(''),
       ) as _i6.Future<String>);
   @override
-  _i6.Future<_i12.Uint8List> readBytes(
+  _i6.Future<_i14.Uint8List> readBytes(
     Uri? url, {
     Map<String, String>? headers,
   }) =>
@@ -368,8 +446,8 @@ class MockHttpClient extends _i1.Mock implements _i5.Client {
           [url],
           {#headers: headers},
         ),
-        returnValue: _i6.Future<_i12.Uint8List>.value(_i12.Uint8List(0)),
-      ) as _i6.Future<_i12.Uint8List>);
+        returnValue: _i6.Future<_i14.Uint8List>.value(_i14.Uint8List(0)),
+      ) as _i6.Future<_i14.Uint8List>);
   @override
   _i6.Future<_i5.StreamedResponse> send(_i5.BaseRequest? request) =>
       (super.noSuchMethod(

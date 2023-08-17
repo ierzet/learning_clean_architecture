@@ -19,14 +19,53 @@ class Home extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Enter Employee ID:'),
+            const EmployeeResult(),
             const SizedBox(height: 10),
             EmployeeIdInput(),
-            const SizedBox(height: 10),
-            const EmployeeResult(),
+            const SizedBox(height: 20), // Add some spacing
+            const Expanded(child: AllEmployeeList()), // Display all employees
           ],
         ),
       ),
+    );
+  }
+}
+
+class AllEmployeeList extends StatelessWidget {
+  const AllEmployeeList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    context.read<AllEmployeeBloc>().add(const GetAllEmployee());
+
+    return BlocBuilder<AllEmployeeBloc, AllEmployeeState>(
+      builder: (context, state) {
+        if (state is AllEmployeeLoading) {
+          return const CircularProgressIndicator();
+        } else if (state is AllEmployeeLoaded) {
+          final allEmployees = state.result;
+
+          return ListView.builder(
+            itemCount: allEmployees.length,
+            itemBuilder: (context, index) {
+              final employee = allEmployees[index];
+
+              return ListTile(
+                leading: CircleAvatar(
+                  radius: 30,
+                  backgroundImage: NetworkImage(employee.avatar),
+                ),
+                title: Text('${employee.firstName} ${employee.lastName}'),
+                subtitle: Text('Email: ${employee.email}'),
+              );
+            },
+          );
+        } else if (state is AllEmployeeLoadFailure) {
+          return Text(state.message);
+        } else {
+          return const SizedBox();
+        }
+      },
     );
   }
 }
@@ -41,6 +80,8 @@ class EmployeeIdInput extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        const Text('Enter Employee ID:'),
+        const SizedBox(width: 10),
         SizedBox(
           height: 30,
           width: 100,
@@ -77,30 +118,45 @@ class EmployeeResult extends StatelessWidget {
         if (state is EmployeeLoading) {
           return const CircularProgressIndicator();
         } else if (state is EmployeeLoaded) {
+          final employee = state.result;
+
           return Container(
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
-                Text('Employee ID: ${state.result.id}'),
-                const SizedBox(height: 8),
-                Text(
-                    'Name: ${state.result.firstName} ${state.result.lastName}'),
-                const SizedBox(height: 8),
-                Text('Email: ${state.result.email}'),
-                Text('avatar: ${state.result.avatar}'),
-                Image.network(
-                  state.result.avatar,
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
+                CircleAvatar(
+                  backgroundImage: NetworkImage(employee.avatar),
+                  radius: 50, // Adjust the radius as needed
                 ),
+                Text('Employee ID: ${employee.id}'),
+                const SizedBox(height: 8),
+                Text('Name: ${employee.firstName} ${employee.lastName}'),
+                const SizedBox(height: 8),
+                Text('Email: ${employee.email}'),
+                const SizedBox(height: 8),
               ],
             ),
           );
         } else if (state is EmployeeLoadFailure) {
           return Text(state.message);
         } else {
-          return const SizedBox();
+          return Container(
+            padding: const EdgeInsets.all(16),
+            child: const Column(
+              children: [
+                Icon(
+                  Icons.person, // Change to the desired Flutter icon
+                  size: 100, // Adjust the size of the icon
+                ),
+                Text('Employee ID:'),
+                SizedBox(height: 8),
+                Text('Name: '),
+                SizedBox(height: 8),
+                Text('Email: '),
+                SizedBox(height: 8),
+              ],
+            ),
+          );
         }
       },
     );

@@ -4,4 +4,5 @@ import 'package:learning_clean_architecture/features/employee/domain/entities/em
 
 abstract class EmployeeRepository {
   Future<Either<Failure, EmployeeEntity>> getCurrentEmployee(int id);
+  Future<Either<Failure, List<EmployeeEntity>>> getCureentAllEmployees();
 }
